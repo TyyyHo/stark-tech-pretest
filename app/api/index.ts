@@ -23,7 +23,7 @@ export const apiGetStockInfo = async (params: T.StockInfoParams) => {
   if (!res.ok) {
     throw new Error("Fetch stock info failed");
   }
-  const data: T.StockInfoResponse[] = await res.json();
+  const data: T.StockInfoResponse = await res.json();
   return data;
 };
 
@@ -50,6 +50,6 @@ export const apiGetStockMonthRevenue = async (params: T.StockMonthRevenueParams)
   if (!res.ok) {
     throw new Error("Fetch stock month revenue failed");
   }
-  const data: T.StockMonthRevenueResponse[] = await res.json();
+  const data: T.StockMonthRevenueResponse = await res.json();
   return data;
 };
