@@ -2,7 +2,13 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+1. 安裝依賴
+
+```bash
+npm install
+```
+
+2. 本地啟動
 
 ```bash
 npm run dev
@@ -14,4 +20,6 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. 訪問頁面
+
+[http://localhost:3000](http://localhost:3000)
