@@ -6,7 +6,7 @@ export type StockInfoResponse = {
   status: number;
   data: StockInfoData[];
 };
-type StockInfoData = {
+export type StockInfoData = {
   industry_category: string;
   stock_id: string;
   stock_name: string;
