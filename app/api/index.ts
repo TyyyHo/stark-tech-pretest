@@ -1,3 +1,5 @@
+import * as T from "./type";
+
 const API_URL = "https://api.finmindtrade.com/api/v4/data";
 const Authorization = "Bearer" + process.env.API_TOKEN;
 
@@ -6,18 +8,23 @@ const Authorization = "Bearer" + process.env.API_TOKEN;
  * https://finmind.github.io/tutor/TaiwanMarket/Technical/#taiwanstockinfo
  * @param data_id 股票代號，可選
  */
-export const apiGetStockInfo = (data_id?: string) => {
+export const apiGetStockInfo = async (params: T.StockInfoParams) => {
   const url = new URL(API_URL);
   url.searchParams.set("dataset", "TaiwanStockInfo");
-  if (data_id) url.searchParams.set("data_id", data_id);
+  if (params.data_id) url.searchParams.set("data_id", params.data_id);
 
-  return fetch(url, {
+  const res = await fetch(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization,
     },
   });
+  if (!res.ok) {
+    throw new Error("Fetch stock info failed");
+  }
+  const data: T.StockInfoResponse = await res.json();
+  return data;
 };
 
 /**
@@ -27,26 +34,22 @@ export const apiGetStockInfo = (data_id?: string) => {
  * @param start_date 開始日期
  * @param end_date 結束日期
  */
-export const apiGetStockMonthRevenue = ({
-  data_id,
-  start_date,
-  end_date,
-}: {
-  data_id: string;
-  start_date?: string;
-  end_date?: string;
-}) => {
+export const apiGetStockMonthRevenue = async (params: T.StockMonthRevenueParams) => {
   const url = new URL(API_URL);
   url.searchParams.set("dataset", "TaiwanStockMonthRevenue");
-  url.searchParams.set("data_id", data_id);
-  if (start_date) url.searchParams.set("start_date", start_date);
-  if (end_date) url.searchParams.set("end_date", end_date);
-
-  return fetch(url, {
+  url.searchParams.set("data_id", params.data_id);
+  url.searchParams.set("start_date", params.start_date);
+  if (params.end_date) url.searchParams.set("end_date", params.end_date);
+  const res = await fetch(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization,
     },
   });
+  if (!res.ok) {
+    throw new Error("Fetch stock month revenue failed");
+  }
+  const data: T.StockMonthRevenueResponse = await res.json();
+  return data;
 };
