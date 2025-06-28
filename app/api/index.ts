@@ -1,7 +1,6 @@
 import * as T from "./type";
 
 const API_URL = "https://api.finmindtrade.com/api/v4/data";
-const Authorization = "Bearer" + process.env.API_TOKEN;
 
 /**
  * 台股總覽 TaiwanStockInfo
@@ -13,13 +12,17 @@ export const apiGetStockInfo = async (params: T.StockInfoParams) => {
   url.searchParams.set("dataset", "TaiwanStockInfo");
   if (params.data_id) url.searchParams.set("data_id", params.data_id);
 
-  const res = await fetch(url, {
-    method: "GET",
+  const res = await fetch("/api/finmind", {
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization,
     },
+    body: JSON.stringify({
+      method: "GET",
+      url,
+    }),
   });
+
   if (!res.ok) {
     throw new Error("Fetch stock info failed");
   }
@@ -40,12 +43,16 @@ export const apiGetStockMonthRevenue = async (params: T.StockMonthRevenueParams)
   url.searchParams.set("data_id", params.data_id);
   url.searchParams.set("start_date", params.start_date);
   if (params.end_date) url.searchParams.set("end_date", params.end_date);
-  const res = await fetch(url, {
-    method: "GET",
+
+  const res = await fetch("/api/finmind", {
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization,
     },
+    body: JSON.stringify({
+      method: "GET",
+      url,
+    }),
   });
   if (!res.ok) {
     throw new Error("Fetch stock month revenue failed");
